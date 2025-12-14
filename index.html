@@ -10,7 +10,7 @@
     :root {
       --bg: #f5f7fb;
       --card: #ffffff;
-      --border: #e2e8f0;
+      --border: #dbe3ef;
       --accent: #3b82f6;
       --accent-soft: #e0edff;
       --accent-soft-2: #dcfce7;
@@ -124,63 +124,29 @@
       100% { transform: translateY(3px) translateX(-4px) rotate(-4deg); opacity: 0.85; }
     }
 
-    /* ================ 自定义猫爪鼠标 ================ */
+    /* ================ 自定义猫爪鼠标（A-1 圆润奶蓝爪） ================ */
 
     .cursor-paw {
       position: fixed;
       top: 0;
       left: 0;
-      width: 32px;
-      height: 32px;
+      width: 40px;
+      height: 40px;
       pointer-events: none;
       transform: translate(-50%, -50%);
       z-index: 9999;
     }
 
-    .cursor-paw-inner {
-      position: absolute;
-      inset: 0;
-      transform-origin: center;
+    .cursor-paw svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
       transition: transform 0.12s ease, filter 0.12s ease;
     }
 
-    /* 猫爪主肉垫 */
-    .cursor-paw-inner::before {
-      content: "";
-      position: absolute;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      background: #fdfdff;
-      border: 2px solid #bfdbfe;
-      box-shadow:
-        0 0 0 2px #e0f2fe,
-        0 6px 8px rgba(148, 163, 184, 0.45);
-      bottom: 2px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    /* 猫爪小肉球 */
-    .cursor-paw-inner::after {
-      content: "";
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #e0f2fe;
-      top: 2px;
-      left: 50%;
-      transform: translateX(-50%);
-      box-shadow:
-        -9px 4px 0 0 #e0f2fe,
-        9px 4px 0 0 #e0f2fe,
-        0 7px 0 0 #e0f2fe;
-    }
-
-    .cursor-paw.hovering .cursor-paw-inner {
+    .cursor-paw.hovering svg {
       transform: scale(1.1) translateY(1px);
-      filter: brightness(1.03);
+      filter: drop-shadow(0 4px 8px rgba(59, 130, 246, 0.35));
     }
 
     /* ================ 顶部卡片 ================ */
@@ -190,7 +156,10 @@
       flex-wrap: wrap;
       gap: 20px;
       align-items: center;
-      background: var(--card);
+      background:
+        radial-gradient(circle at top left, #e5f0ff 0, transparent 70%),
+        radial-gradient(circle at bottom right, #e0fbea 0, transparent 70%),
+        var(--card);
       border-radius: 20px;
       padding: 20px 20px 18px;
       border: 1px solid var(--border);
@@ -318,7 +287,10 @@
     }
 
     .card {
-      background: var(--card);
+      background:
+        radial-gradient(circle at top left, #eef4ff 0, transparent 70%),
+        radial-gradient(circle at bottom right, #e7fdf2 0, transparent 70%),
+        var(--card);
       border-radius: var(--radius-lg);
       border: 1px solid var(--border);
       padding: 14px 16px 12px;
@@ -497,9 +469,31 @@
   <div class="bg-shape candy c1"></div>
   <div class="bg-shape candy c2"></div>
 
-  <!-- 猫爪鼠标 -->
+  <!-- 猫爪鼠标（A-1 软萌奶蓝猫爪） -->
   <div class="cursor-paw">
-    <div class="cursor-paw-inner"></div>
+    <svg viewBox="0 0 40 40">
+      <!-- 大掌心 -->
+      <ellipse cx="20" cy="24" rx="10" ry="9"
+               fill="#fdfdff"
+               stroke="#bfdbfe"
+               stroke-width="2"
+               />
+      <!-- 掌心柔和高光 -->
+      <ellipse cx="17" cy="21" rx="4" ry="3"
+               fill="rgba(191, 219, 254, 0.5)" />
+
+      <!-- 四个小肉球 -->
+      <circle cx="13" cy="15" r="3.2" fill="#e0f2fe" />
+      <circle cx="18" cy="13.5" r="3.4" fill="#e0f2fe" />
+      <circle cx="22" cy="13.5" r="3.4" fill="#e0f2fe" />
+      <circle cx="27" cy="15" r="3.2" fill="#e0f2fe" />
+
+      <!-- 外轮廓柔和阴影 -->
+      <ellipse cx="20" cy="26" rx="11" ry="10"
+               fill="none"
+               stroke="rgba(148, 163, 184, 0.5)"
+               stroke-width="0.8" />
+    </svg>
   </div>
 
   <div class="page">
@@ -589,7 +583,7 @@
               </div>
             </div>
 
-            <!-- TODO: 你可以复制这一块改名字和链接，增加更多项目 -->
+            <!-- 你可以复制这一块改名字和链接，增加更多项目 -->
             <!--
             <div class="project">
               <div class="project-header">
@@ -738,7 +732,7 @@
   <!-- 猫爪鼠标 JS -->
   <script>
     const pawWrapper = document.querySelector(".cursor-paw");
-    const pawInner = document.querySelector(".cursor-paw-inner");
+    const pawSvg = pawWrapper.querySelector("svg");
 
     let targetX = window.innerWidth / 2;
     let targetY = window.innerHeight / 2;
@@ -750,7 +744,7 @@
       targetY = e.clientY;
     });
 
-    // 当鼠标经过可交互元素时，让猫爪“按下”一点
+    // 悬停在可交互元素上时，让猫爪“按下”一下
     document.addEventListener("mouseover", (e) => {
       const interactive = e.target.closest("a, button, .btn, .project");
       if (interactive) {
@@ -766,11 +760,16 @@
     });
 
     function animatePaw() {
-      const lerp = 0.35; // 越大跟随越快
+      const lerp = 0.5; // 越大越跟手
       currentX += (targetX - currentX) * lerp;
       currentY += (targetY - currentY) * lerp;
 
       pawWrapper.style.transform = `translate(${currentX}px, ${currentY}px) translate(-50%, -50%)`;
+
+      // 轻微旋转，让爪子有一点“活着”的感觉
+      const dx = targetX - currentX;
+      const angle = dx * 0.04; // 微小旋转
+      pawSvg.style.transform = `rotate(${angle}deg)`;
 
       requestAnimationFrame(animatePaw);
     }
