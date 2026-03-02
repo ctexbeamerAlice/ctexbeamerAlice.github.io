@@ -1145,11 +1145,12 @@ document.querySelector('.prompt.output_prompt').remove();
             <div class="project-desc">
               <ul>
                 <li>对比RT-DETR、YOLOv8与YOLOv5三种模型用于提取舌体ROI，权衡精度与速度，最终选用YOLOv8，mAP50为0.96，mAP50-95为0.72</li>
-                <li>将ResNet18作为backbone与ViT融合，并通过Dropout缓解过拟合，训练初始舌苔分类模型，F1得分达0.98，相较单独的ResNet18与ViT提高约0.02，收敛所需迭代轮次减小约5倍</li>
-                <li>对比DCGAN等模型后选用VAE生成舌苔图像。基于初始舌苔分类模型，经伪标签法与人工二次确认，用生成图像扩充训练集。对初始模型进行剪枝、微调与蒸馏后F1为0.97，参数量下降约30%</li>
+                <li>将ResNet18与ViT融合，并通过Dropout缓解过拟合，训练初始舌苔分类模型，F1得分达0.98，相较单独的ResNet18与ViT提高约0.02，收敛所需迭代轮次减小约5倍</li>
+                <li>对比DCGAN等模型后选用改进的VAE生成舌苔图像。在VAE结构中插入卷积层，增加特征通道数量，另外用L1损失替代MSE，加入KL热身策略等，能够生成较清晰舌苔图像</li>
+                <li>基于初始舌苔分类模型，经伪标签法与人工二次确认，用生成图像扩充训练集。对初始模型进行剪枝、微调与蒸馏后F1为0.97，参数量下降约30%</ul>
                 <li>通过级联分类器定位人脸，利用欧拉视频放大算法实现非接触式心率测量，静息误差约15BPM。事后引入BiGRU神经网络，基于3σ原则检测心率异常</li>
                 <li>考虑到数据集规模较小，放弃进行LoRA微调。将数据集注入提示词，输入既往病史等文本信息，在提示词中将其与舌象分类结果等结合，调用大模型API评估健康状态</li>
-                <li>通过Visio绘制流程图，利用LaTeX撰写一万余字专利交底书</li>
+                <li>通过Visio绘制算法流程图，利用LaTeX撰写一万余字专利交底书</li>
               </ul>
               <div class="project-highlight">
                 <strong>成果：</strong>作为第一作者获得1项软件著作权，1项在投发明专利（实审中）
@@ -1169,7 +1170,7 @@ document.querySelector('.prompt.output_prompt').remove();
             <div class="project-desc">
               <ul>
                 <li>标注2000余图像，对比Dlib、SVM等模型，选用YOLOv8检测婴幼儿眨眼，mAP50为0.95，在应对斜躺等姿态时具有较好检测效果</li>
-                <li>组装舵机云台，将算法部署到K230视觉模块，引入卡尔曼滤波追踪婴幼儿眼部，FPS约为15</li>
+                <li>组装舵机云台，将算法部署到K230视觉模块，引入卡尔曼滤波追踪婴幼儿眼部，FPS约为10</li>
                 <li>合作使用SolidWorks设计云台的保护与调节结构。与皮肤病病灶分割等项目整合后获得AIC全国三等奖</li>
               </ul>
               <div class="project-highlight">
@@ -1221,6 +1222,32 @@ document.querySelector('.prompt.output_prompt').remove();
             </div>
           </div>
         </div>
+
+
+
+        <!-- 项目5 -->
+        <div class="project-item">
+          <div class="project-card">
+            <div class="project-header">
+              <h3 style="font-size: 1.3rem; margin-bottom: 16px; color: white;">Kaggle: PhysioNet - Digitization of ECG Images</h3>
+              <span class="project-role">单人参赛</span>
+            </div>
+            <div class="project-time">2025.12 - 2026.01</div>
+            <div class="project-desc">
+              <ul>
+                <li>图像预处理方面，把图像转为灰度图后，执行非局部均值去噪用于减少背景网格噪声；执行自适应直方图均衡增强对比度，突出心率曲线</li>
+                <li>基于开源代码，将比赛策略分为三步，前两步用于矫正心电图像和网格，第三步用于提取心电曲线</li>
+                <li>在开源代码基础上修改，在第一步中所使用U-Net编码器中加入ResNet18并跳跃连接，提升推理速度</li>
+                <li>根据模型信噪比分配权重，将开源模型与自己模型的结果集成，最终公共榜得分18.34，私有榜得分18.24</li>
+              </ul>
+              <div class="project-highlight">
+                <strong>成果：</strong>以排行榜第116名，即全球前8.2%的成绩获得铜牌
+              </div>
+            </div>
+          </div>
+        </div>
+
+
 
 
       </div>
